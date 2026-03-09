@@ -74,3 +74,4 @@ Open http://localhost:3000
 - **Categories**: Add a `category` field (keys, clothing, electronics…)
 - **Notifications**: Send email via nodemailer when an item is resolved
 - **Map view**: Render a map using `leaflet` with item locations pinned
+
