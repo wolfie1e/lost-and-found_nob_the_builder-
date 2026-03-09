@@ -1,0 +1,110 @@
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ─── Variants ─────────────────────────────────────── */
+.primary {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    box-shadow: var(--shadow-primary);
+}
+
+.primary:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+    box-shadow: 0 6px 24px rgba(108, 99, 255, 0.4);
+}
+
+.secondary {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+.secondary:hover:not(:disabled) {
+    background: #dbd7ff;
+}
+
+.danger {
+    background: #fee2e2;
+    color: var(--color-error);
+}
+
+.danger:hover:not(:disabled) {
+    background: #fecaca;
+}
+
+.ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+}
+
+.ghost:hover:not(:disabled) {
+    background: var(--color-surface-hover);
+}
+
+.outline {
+    background: transparent;
+    color: var(--color-text-primary);
+    border: 1.5px solid var(--color-border-strong);
+}
+
+.outline:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* ─── Sizes ─────────────────────────────────────────── */
+.sm {
+    padding: 6px 12px;
+    font-size: var(--text-xs);
+}
+
+.md {
+    padding: 9px 18px;
+    font-size: var(--text-sm);
+}
+
+.lg {
+    padding: 12px 24px;
+    font-size: var(--text-base);
+}
+
+/* ─── Modifiers ─────────────────────────────────────── */
+.fullWidth {
+    width: 100%;
+}
+
+/* ─── Spinner ────────────────────────────────────────── */
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -7,10 +7,17 @@ client/node_modules/
 client/dist/
 client/build/
 
-# Env files
+# Env files (NEVER commit these)
 .env
 .env.local
 .env.*.local
+server/.env
+client/.env
+.env.production
+
+# Prisma generated
+server/generated/
+server/prisma/migrations/*.sql.bak
 
 # Logs
 *.log
@@ -23,3 +30,7 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Docker
+.dockerignore
+

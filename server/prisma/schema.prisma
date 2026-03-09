@@ -1,0 +1,92 @@
+// ════════════════════════════════════════════════════════
+//  Lost & Found — Prisma Schema
+//  Phase 5: Replace in-memory store with PostgreSQL
+// ════════════════════════════════════════════════════════
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── User ────────────────────────────────────────────────────────────────────
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(STUDENT)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  items     Item[]
+  auditLogs AuditLog[]
+
+  @@index([email])
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+// ─── Item ────────────────────────────────────────────────────────────────────
+model Item {
+  id          String    @id @default(uuid())
+  type        ItemType
+  title       String
+  description String?
+  location    String
+  contact     String
+  category    Category  @default(OTHER)
+  imageUrl    String?   // Phase 5+: cloud storage URL
+  resolved    Boolean   @default(false)
+  resolvedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([type])
+  @@index([resolved])
+  @@index([createdAt])
+  @@index([userId])
+  @@index([category])
+}
+
+enum ItemType {
+  LOST
+  FOUND
+}
+
+enum Category {
+  KEYS
+  ELECTRONICS
+  CLOTHING
+  BAG
+  ID_CARD
+  WALLET
+  BOOK
+  SPORTS
+  OTHER
+}
+
+// ─── AuditLog ────────────────────────────────────────────────────────────────
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String   // e.g. "item.created", "item.deleted", "item.resolved"
+  entityId  String?  // ID of the affected entity
+  meta      Json?    // Additional context (IP, old values, etc.)
+  createdAt DateTime @default(now())
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
